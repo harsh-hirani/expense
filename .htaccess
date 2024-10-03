@@ -1,0 +1,4 @@
+RewriteEngine On
+ErrorDocument 404 /expenss/404.php
+Redirect 301 /expenss/comps /expenss/not.php
+Redirect 301 /expenss/base /expenss/not.php

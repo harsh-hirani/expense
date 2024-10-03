@@ -1,0 +1,17 @@
+.side {
+
+    border-left: 5px solid rgb(255, 111, 0) ;
+    border-radius: 10px;
+    box-shadow: 4px 5px 5px 1px rgba(0, 0, 0, 0.1);
+    padding: 2px 10px;
+    
+}
+
+
+.tages span{
+    border-radius: 50000px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 1px 10px 5px;
+    line-height: 2px;
+}
