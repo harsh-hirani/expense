@@ -34,7 +34,13 @@ if($count == 0){
                 window.location.href = "../";
               </script>';
     } else {
-        echo "Error: " . $stmt->error; // Output any errors
+        echo "Error: " . $stmt->error."will be again try again 4 sec". // Output any errors
+        '<script>
+        setTimeout(function(){
+            window.location.href = "./signup.php";
+        }, 4000); // Redirect to signup page after 4 seconds
+                
+              </script>';
     }
 } else {
     echo '<script>

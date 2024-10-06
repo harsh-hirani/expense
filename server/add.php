@@ -3,9 +3,17 @@ include 'conn.php';
 $amount = $_POST['amount'];
 $title = $_POST['title'];
 $cid = $_COOKIE['useride'];
-$stmt = $conn->prepare("INSERT INTO expenses (title, amount, cid) VALUES (?, ?, ?)");
+if(isset($_POST['cate'])){
+    $cate = $_POST['cate'];}else{
+        $cate = "Other";
+    }
+$tz='Indian/Mahe';
+date_default_timezone_set($tz);
+$timeZone = date_default_timezone_get();
+$tt= time();
+$stmt = $conn->prepare("INSERT INTO expenses (title, amount, cid, tt, cate) VALUES (?, ?, ?, ? ,?)");
 
-$stmt->bind_param("sii", $title, $amount, $cid);
+$stmt->bind_param("siiis", $title, $amount, $cid,$tt,$cate);
 
 if($stmt->execute()){
     echo "New record created successfully";

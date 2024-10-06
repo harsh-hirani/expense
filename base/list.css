@@ -7,11 +7,18 @@
     
 }
 
+input[type="radio"] + label.cate,
 
 .tages span{
     border-radius: 50000px;
-    border: 1px solid black;
+    border: 2px solid black;
     text-align: center;
     padding: 1px 10px 5px;
-    line-height: 2px;
+    /* line-height: 2px; */
+    min-height: 30px;
+}
+
+input[type="radio"]:checked + label.cate{
+    background-color: rgb(255, 111, 0);
+    color: white;
 }

@@ -13,6 +13,11 @@ if($count > 0){
     setcookie('usere', $data['email'], time() + (86400 * 30), "/");
     setcookie('namee', $data['name'], time() + (86400 * 30), "/");
     setcookie('useride', $data['id'], time() + (86400 * 30), "/");
+    echo '
+        <script>
+            window.location.href = "../";
+        </script>
+    ';
 }else{
     echo '
         <script>
