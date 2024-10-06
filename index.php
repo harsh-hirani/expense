@@ -8,7 +8,7 @@ if (!$islogedin) {
     $sql = "SELECT * FROM expenses WHERE cid='" . $_COOKIE['useride'] . "'";
 
     $result = mysqli_query($conn, $sql);
-    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun"];
+    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun","Other"];
 }
 
 ?>
@@ -85,8 +85,8 @@ if (!$islogedin) {
                             <div class=" col-9">
 
                                 <div class=" col text-break text-capitalize">' . $row['title'] . '</div>
-                                <div class="col ">Date <span class="mx-1"> <a href="./server/delete.php?id=' . $row['id'] . '">delete</a> </span>
-                                <span> <a href="./server/edit.php?id=' . $row['id'] . '">edit</a> </span></div>
+                                <div class="col ">'.date("j/n/Y",(int)$row['tt']).' <span class="mx-1"> <a href="./server/delete.php?id=' . $row['id'] . '">delete</a> </span>
+                                <span> <a href="./edit.php?id=' . $row['id'] . '">edit</a> </span></div>
                             </div>
                             <div class=" col-3">
                                 ₹' . $row['amount'] . '
@@ -103,6 +103,7 @@ if (!$islogedin) {
                             } ?>
         </div>
     </div>
+
     <?php include './base/js.php'; ?>
 
 </body>
