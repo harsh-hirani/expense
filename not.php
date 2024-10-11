@@ -1,1 +1,1 @@
-no access to this file
+<?php include './unauth.php';?>

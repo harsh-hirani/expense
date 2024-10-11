@@ -3,9 +3,8 @@ include './auth/auth.php';
 if (!$islogedin) {
     $html = "<h1>login to see</h1>";
 } else {
-    $html = "";
     include './server/conn.php';
-    $sql = "SELECT * FROM expenses WHERE cid='" . $_COOKIE['useride'] . "'";
+    $sql = "SELECT * FROM expenses WHERE cid='" . $_COOKIE['useride'] . "' limit 20";
 
     $result = mysqli_query($conn, $sql);
     $cates = ["Food", "Travel", "Shopping", "Medical", "Fun","Other"];
@@ -25,10 +24,10 @@ if (!$islogedin) {
 </head>
 
 <body>
+
     <?php
-    if ($islogedin) {
-        echo "<h3>welcome, " . $_COOKIE['namee'] . "</h3>";
-    }
+    include './comps/nav.php';
+   
     ?>
 
     <div class="container">
@@ -70,12 +69,12 @@ if (!$islogedin) {
     <div class="container">
         <div class="row "><?php
                             while ($row = $result->fetch_assoc()) {
-                                $html .= "<div class='card my-2'>
-            <div class='card-body'>
-                <h5 class='card-title'>{}</h5>
-                <p class='card-text'>{$row['amount']}</p>
-            </div>
-        </div>";
+        //                         $html .= "<div class='card my-2'>
+        //     <div class='card-body'>
+        //         <h5 class='card-title'>{}</h5>
+        //         <p class='card-text'>{$row['amount']}</p>
+        //     </div>
+        // </div>";
 
 
                                 echo
