@@ -21,6 +21,9 @@ $links = [
                 <li class="nav-item">
                     <a class="nav-link" href="/expenss/dashboard.php">Dashboard</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/expenss/groups.php">Groups</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Account

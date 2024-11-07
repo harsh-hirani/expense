@@ -4,10 +4,31 @@ if (!$islogedin) {
     $html = "<h1>login to see</h1>";
 } else {
     include './server/conn.php';
-    $sql = "SELECT * FROM expenses WHERE cid='" . $_COOKIE['useride'] . "' limit 20";
-
-    $result = mysqli_query($conn, $sql);
-    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun","Other"];
+    // $sql = "SELECT * FROM expenses WHERE cid='" . $_COOKIE['useride'] . "' limit 20";
+    $cid = $_COOKIE['useride'];
+    // $result = mysqli_query($conn, $sql);
+    $sql = "
+    SELECT 
+        e.title,e.id as id,
+        e.amount,
+        e.tt,
+        e.cate,
+        IF(e.gid = -1, 'personal', 'group') AS expense_type,
+        e.gid,
+        gp.name AS contributor_name
+    FROM 
+        expenses e
+    LEFT JOIN 
+        group_people gp ON e.gpid = gp.id AND e.gid != -1
+    WHERE 
+        (e.gid = -1 AND e.cid = ?) OR (gp.uid = ?)
+    ORDER BY 
+        e.tt DESC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $cid, $cid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun", "Other"];
 }
 
 ?>
@@ -27,7 +48,7 @@ if (!$islogedin) {
 
     <?php
     include './comps/nav.php';
-   
+
     ?>
 
     <div class="container">
@@ -69,22 +90,14 @@ if (!$islogedin) {
     <div class="container">
         <div class="row "><?php
                             while ($row = $result->fetch_assoc()) {
-        //                         $html .= "<div class='card my-2'>
-        //     <div class='card-body'>
-        //         <h5 class='card-title'>{}</h5>
-        //         <p class='card-text'>{$row['amount']}</p>
-        //     </div>
-        // </div>";
-
-
-                                echo
-                                '<div class="col-lg-4 col-12 my-2  ">
+                                if($row['expense_type'] == 'personal'){}
+                                echo '<div class="col-lg-4 col-12 my-2  ">
                     <div class="side ">
                         <div class="row ">
                             <div class=" col-9">
 
                                 <div class=" col text-break text-capitalize">' . $row['title'] . '</div>
-                                <div class="col ">'.date("j/n/Y",(int)$row['tt']).' <span class="mx-1"> <a href="./server/delete.php?id=' . $row['id'] . '">delete</a> </span>
+                                <div class="col ">' . date("j/n/Y", (int)$row['tt']) . ' <span class="mx-1"> <a href="./server/delete.php?id=' . $row['id'] . '">delete</a> </span>
                                 <span> <a href="./edit.php?id=' . $row['id'] . '">edit</a> </span></div>
                             </div>
                             <div class=" col-3">

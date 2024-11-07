@@ -25,6 +25,8 @@ if (!$islogedin) {
                 max-height: 400px;
                 margin: 20px auto;
 
+            }.bar{
+                width: 100%;
             }
             .chart-main{
                 display: flex;
@@ -67,6 +69,20 @@ if (!$islogedin) {
                 <div id="chart1" class="chart"></div>
                 <div class="title">
                     Total Expenses by Category
+                </div>
+            </div>
+            <div class="cen">
+                <div id="chart2" class="chart"></div>
+                <div class="title">
+                    Total Expenses by Time
+                </div>
+            </div>
+        </div>
+        <div class="chart-main">
+            <div class=" cen">
+                <div id="bar" class=" bar"></div>
+                <div class="title">
+                    expense by month
                 </div>
             </div>
             <div class="cen">
@@ -133,6 +149,42 @@ if (!$islogedin) {
                 chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
                 chart2.render();
             });
+            $.post("./api/bar.php",{},(data)=>{
+console.log(data)
+
+            });
+            var options = {
+          series: [{
+          name: 'series1',
+          data: [31, 40, 28, 51, 42, 109, 100]
+        }, {
+          name: 'series2',
+          data: [11, 32, 45, 32, 34, 52, 41]
+        }],
+          chart: {
+          height: 350,
+          type: 'area'
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth'
+        },
+        xaxis: {
+          type: 'datetime',
+          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+        },
+        tooltip: {
+          x: {
+            format: 'dd/MM/yy HH:mm'
+          },
+        },
+        };
+
+        var bar = new ApexCharts(document.querySelector("#bar"), options);
+        bar.render();
+      
             // setInterval(function() {
             //     $.post('./api/chart.php', {
             //     min: 0,
