@@ -25,14 +25,18 @@ if (!$islogedin) {
                 max-height: 400px;
                 margin: 20px auto;
 
-            }.bar{
+            }
+
+            .bar {
                 width: 100%;
             }
-            .chart-main{
+
+            .chart-main {
                 display: flex;
                 justify-content: space-around;
                 margin: 20px;
             }
+
             .cen {
                 display: flex;
                 align-items: center;
@@ -47,14 +51,16 @@ if (!$islogedin) {
             }
 
             @media (max-width: 768px) {
-                .chart-main{
+                .chart-main {
                     flex-direction: column;
                 }
-                .cen{
+
+                .cen {
                     border-radius: 15px;
                     margin-top: 10px;
 
                 }
+
                 .chart {
                     width: auto;
                 }
@@ -74,7 +80,7 @@ if (!$islogedin) {
             <div class="cen">
                 <div id="chart2" class="chart"></div>
                 <div class="title">
-                    Total Expenses by Time
+                    Total Expenses by Frequency
                 </div>
             </div>
         </div>
@@ -88,7 +94,7 @@ if (!$islogedin) {
             <div class="cen">
                 <div id="chart2" class="chart"></div>
                 <div class="title">
-                    Total Expenses by Time
+                    Total Expenses This Month: <span id="total">0</span>
                 </div>
             </div>
         </div>
@@ -101,12 +107,13 @@ if (!$islogedin) {
                 min: 0,
                 max: Date.now() / 1000,
             }, function(data, status) {
-                console.log(data);
+                console.log(data, status);
                 let labels_cate = data.entries.map(e => e.cate + "-" + e.total);
                 let labels_tms = data.entries.map(e => e.cate + "-" + e.tms);
                 let series_cate = data.entries.map(e => parseFloat(e.total));
                 let series_tms = data.entries.map(e => parseFloat(e.tms));
-
+                var total_display = document.getElementById('total');
+                total_display.innerText = series_cate.reduce((a, b) => a + b, 0);
                 var options1 = {
                     series: series_cate,
                     chart: {
@@ -149,42 +156,58 @@ if (!$islogedin) {
                 chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
                 chart2.render();
             });
-            $.post("./api/bar.php",{},(data)=>{
-console.log(data)
+            $.post("./api/bar.php", {}, (d) => {
+                console.log(d)
 
+                var options = {
+                    series: [{
+                        name: 'total',
+                        data: d.entries.map(e => e.total_expense)
+                    }, {
+                        name: 'Food',
+                        data: d.entries.map(e => e.Food)
+                    }, {
+                        name: 'Travel',
+                        data: d.entries.map(e => e.Travel)
+                    }, {
+                        name: 'Shopping',
+                        data: d.entries.map(e => e.Shopping)
+                    }, {
+                        name: 'Medical',
+                        data: d.entries.map(e => e.Medical)
+                    }, {
+                        name: 'Fun',
+                        data: d.entries.map(e => e.Fun)
+                    }, {
+                        name: 'Other',
+                        data: d.entries.map(e => e.Other)
+                    },
+                ],
+                    chart: {
+                        height: 350,
+                        type: 'area'
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    xaxis: {
+                        type: 'datetime',
+                        categories: d.days
+                        // categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                    },
+                    tooltip: {
+                        x: {
+                            format: 'dd/MM/yy'
+                        },
+                    },
+                };
+
+                var bar = new ApexCharts(document.querySelector("#bar"), options);
+                bar.render();
             });
-            var options = {
-          series: [{
-          name: 'series1',
-          data: [31, 40, 28, 51, 42, 109, 100]
-        }, {
-          name: 'series2',
-          data: [11, 32, 45, 32, 34, 52, 41]
-        }],
-          chart: {
-          height: 350,
-          type: 'area'
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        xaxis: {
-          type: 'datetime',
-          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-        },
-        tooltip: {
-          x: {
-            format: 'dd/MM/yy HH:mm'
-          },
-        },
-        };
-
-        var bar = new ApexCharts(document.querySelector("#bar"), options);
-        bar.render();
-      
             // setInterval(function() {
             //     $.post('./api/chart.php', {
             //     min: 0,

@@ -95,7 +95,7 @@ if (!$islogedin) {
                         ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <?php echo $person['name'];?> 
-                                <a href="editgroupperson.php?id=<?php echo $person['id'];?>">edit</a>
+                                
                             </li>
                         <?php
                         } ?>

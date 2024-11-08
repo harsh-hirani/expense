@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Controller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <span class="navbar">
+        <!-- Left Side: Website Name and Links -->
+        <div class="nav-left">
+            <h4 class="brand">Expense Controller</h4>
+            <a href="#features">Features</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#groups">Groups</a>
+            <a href="#aboutUs">Contact Us</a>
+        </div>
+
+        <!-- Right Side: Login and Signup Links -->
+        <div class="nav-right">
+            <a href="../auth/login.php" class="nav-link">Login</a>
+            <a href="../auth/signup.php" class="nav-link signup-link">Signup</a>
+        </div>
+    </span>
+
+
+
+
+    <!-- landing page and features -->
+    <section class="welcome-page">
+        <div class="welcome-page-text">
+            <h2>Expense Controller</h2>
+            <p>Simplify, Track, Save</p>
+        </div>    
+    </section>
+
+    <section class="features" id="features">
+        <div class="features-header">
+            <h3>Features Of Expense Controller</h3>
+        </div>
+            <div class="features-main">
+                <div class="features-inner">
+                    <img src="1st.png" alt="img" width="150px" height="150px">
+                    <h3>Expense Tracking </h3>
+                    <p>Log all expenses with details, categorize by type, and view transaction history to better understand spending habits.</p>
+                </div>
+                <div class="features-inner">
+                    <img src="2nd.png" alt="img" width="150px" height="150px">
+                    <h3>Budget Management </h3>
+                    <p>Set monthly or custom budgets, track spending against your limits, and receive alerts when approaching budget thresholds.</p>
+                </div>
+                <div class="features-inner">
+                    <img src="3rd.png" alt="img" width="150px" height="150px">
+                    <h3>Financial Reports </h3>
+                    <p>Visualize spending patterns with detailed charts and graphs, including monthly summaries and category breakdowns for better financial insights.</p>
+                </div>
+                <div class="features-inner">
+                    <img src="4th.png" alt="img" width="150px" height="150px">
+                    <h3>Group Expense Sharing: </h3>
+                    <p>Easily share expenses with friends or family, split bills, and keep track of shared spending in groups for clear accountability.</p>
+                </div>
+
+            </div>
+    
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- footer section -->
+    <footer>
+        <div class="footer-container" id="aboutUs">
+            <!-- About Us Section -->
+            <div class="about-us">
+                <h2 class="about-header">About Us</h2>
+                <br>
+                <p>Name: Darshan Patel</p>
+                <p>Roll Number: 22BCP006</p>
+                <br>
+                <p>Name: Harsh Hirani</p>
+                <p>Roll Number: 22BCP036</p>
+                <br>
+                <p>Name: Anshul Jethva</p>
+                <p>Roll Number: 22BCP021</p>
+            </div>
+
+            <!-- Contact Us Form -->
+            <div class="contact-us">
+                <h3 class="about-header">Contact Us</h3>
+                <form action="#" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+
+                    <button type="submit" id="footer_submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -3,6 +3,8 @@ include './auth/auth.php';
 if (!$islogedin) {
     $html = "<h1>login to see</h1>";
 } else {
+    try{
+        
     include './server/conn.php';
     // $sql = "SELECT * FROM expenses WHERE cid='" . $_COOKIE['useride'] . "' limit 20";
     $cid = $_COOKIE['useride'];
@@ -21,7 +23,7 @@ if (!$islogedin) {
     LEFT JOIN 
         group_people gp ON e.gpid = gp.id AND e.gid != -1
     WHERE 
-        (e.gid = -1 AND e.cid = ?) OR (gp.uid = ?)
+        (e.gid = -1 AND e.cid = ?) OR (gp.uid = ?)  and e.amount>0
     ORDER BY 
         e.tt DESC";
     $stmt = $conn->prepare($sql);
@@ -29,8 +31,10 @@ if (!$islogedin) {
     $stmt->execute();
     $result = $stmt->get_result();
     $cates = ["Food", "Travel", "Shopping", "Medical", "Fun", "Other"];
+}catch(Exception $e){
+    $html = "<h1>error</h1>";
 }
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
