@@ -8,7 +8,7 @@ function toggleSlider() {
 }
 
 function footer_alert(){
-    alert("your response have been saved!")
+    // alert("your response have been saved!")
 }
 
 

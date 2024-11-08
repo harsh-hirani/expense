@@ -53,7 +53,7 @@ try {
                 $expenses[] = ["total_expense" => 0, 
                 "Food"=>0,
                 "Fun"=>0,
-                "Medical"=>555,
+                "Medical"=>0,
                 "Other"=>0,
                 "Shopping"=> 0,
                 "Travel"=> 0,];

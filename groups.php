@@ -34,9 +34,7 @@ if (!$islogedin) {
             <h2 class="display-2">
                 Groups
             </h2>
-            <h3 class="display-6 text-muted bolder">
-                adkbfdsfbgsdbfkj
-            </h3>
+            
         </div>
 
         <div class="container">

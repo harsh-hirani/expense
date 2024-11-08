@@ -62,9 +62,7 @@ if (!$islogedin) {
                 <a class="nav-link " style="cursor: pointer;" href="group.php?id=<?php echo $_GET['id']; ?>">
                     < <?php echo $gname; ?></a>
             </h2>
-            <h3 class="display-6 text-muted bolder">
-                adkbfdsfbgsdbfkj
-            </h3>
+            
         </div>
 
 

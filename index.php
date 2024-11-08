@@ -101,8 +101,8 @@ if (!$islogedin) {
                             <div class=" col-9">
 
                                 <div class=" col text-break text-capitalize">' . $row['title'] . '</div>
-                                <div class="col ">' . date("j/n/Y", (int)$row['tt']) . ' <span class="mx-1"> <a href="./server/delete.php?id=' . $row['id'] . '">delete</a> </span>
-                                <span> <a href="./edit.php?id=' . $row['id'] . '">edit</a> </span></div>
+                                <div class="col ">' . date("j/n/Y", (int)$row['tt']) . ' <span class="mx-1 text-danger  del-button"> <a class="text-danger" href="./server/delete.php?id=' . $row['id'] . '">delete</a> </span>
+                                <span> <a class="text-success" href="./edit.php?id=' . $row['id'] . '">edit</a> </span></div>
                             </div>
                             <div class=" col-3">
                                 ₹' . $row['amount'] . '

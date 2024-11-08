@@ -81,9 +81,7 @@ if (!$islogedin) {
             <h2 class="display-2">
                 <?php echo $gname; ?>
             </h2>
-            <h3 class="display-6 text-muted bolder">
-                adkbfdsfbgsdbfkj
-            </h3>
+            
         </div>
 
 
