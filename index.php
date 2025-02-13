@@ -30,7 +30,7 @@ if (!$islogedin) {
     $stmt->bind_param("ii", $cid, $cid);
     $stmt->execute();
     $result = $stmt->get_result();
-    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun", "Other"];
+    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun", "Stationary", "Other","borrow"];
 }catch(Exception $e){
     $html = "<h1>error</h1>";
 }

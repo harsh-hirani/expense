@@ -71,12 +71,44 @@ if (!$islogedin) {
     <body>
         <?php include './comps/nav.php'; ?>
         <div class="chart-main">
+            <div class="cen">
+                <div class="title">
+                    Total Expenses This Month: <span id="total">0</span>
+                </div>
+            </div>
+            <div class="cen">
+                <div class="d-flex p-3">
+
+                    <label>Month:</label>
+                    <select name="month" id="month">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="year" id="year" disabled>
+                        <option value="2025">2025 </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-main">
             <div class=" cen">
                 <div id="chart1" class="chart"></div>
                 <div class="title">
                     Total Expenses by Category
                 </div>
             </div>
+
             <div class="cen">
                 <div id="chart2" class="chart"></div>
                 <div class="title">
@@ -84,6 +116,7 @@ if (!$islogedin) {
                 </div>
             </div>
         </div>
+
         <div class="chart-main">
             <div class=" cen">
                 <div id="bar" class=" bar"></div>
@@ -91,28 +124,66 @@ if (!$islogedin) {
                     expense by month
                 </div>
             </div>
-            <div class="cen">
-                <div id="chart2" class="chart"></div>
-                <div class="title">
-                    Total Expenses This Month: <span id="total">0</span>
-                </div>
-            </div>
-        </div>
 
+        </div>
         <?php include './base/js.php'; ?>
         <?php include './base/chartjs.php'; ?>
         <script>
-            var chart1, chart2;
+            var month = document.getElementById('month');
+            var year = document.getElementById('year');
+            // displays
+            var total_display = document.getElementById('total');
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-11, so add 1
+            const currentYear = currentDate.getFullYear();
+            month.value = currentMonth;
+            year.value = currentYear;
+            
+            month.addEventListener('input', function() {
+                adjust(month.value, year.value);
+            });
+
+            const mapReducer = (d) => {
+                return {
+                        series: [{
+                            name: 'total',
+                            data: d.entries.map(e => e.total_expense)
+                        }, {
+                            name: 'Food',
+                            data: d.entries.map(e => e.Food)
+                        }, {
+                            name: 'Travel',
+                            data: d.entries.map(e => e.Travel)
+                        }, {
+                            name: 'Shopping',
+                            data: d.entries.map(e => e.Shopping)
+                        }, {
+                            name: 'Medical',
+                            data: d.entries.map(e => e.Medical)
+                        }, {
+                            name: 'Fun',
+                            data: d.entries.map(e => e.Fun)
+                        }, {
+                            name: 'Other',
+                            data: d.entries.map(e => e.Other)
+                        }, ],
+                        xaxis: {
+                            categories: d.days
+                        },
+                    };
+            };
+            var chart1, chart2, bar;
             $.post('./api/chart.php', {
                 min: 0,
                 max: Date.now() / 1000,
+                month: currentMonth,
+                year: currentYear
             }, function(data, status) {
                 console.log(data, status);
-                let labels_cate = data.entries.map(e => e.cate + "-" + e.total);
-                let labels_tms = data.entries.map(e => e.cate + "-" + e.tms);
+                let labels_cate = data.entries.map(e => e.cate);
                 let series_cate = data.entries.map(e => parseFloat(e.total));
                 let series_tms = data.entries.map(e => parseFloat(e.tms));
-                var total_display = document.getElementById('total');
+
                 total_display.innerText = series_cate.reduce((a, b) => a + b, 0);
                 var options1 = {
                     series: series_cate,
@@ -137,7 +208,7 @@ if (!$islogedin) {
                     chart: {
                         type: 'donut',
                     },
-                    labels: labels_tms,
+                    labels: labels_cate,
                     responsive: [{
                         breakpoint: 480,
                         options: {
@@ -150,7 +221,7 @@ if (!$islogedin) {
                         }
                     }]
                 };
-
+                
                 chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
                 chart1.render();
                 chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
@@ -160,31 +231,9 @@ if (!$islogedin) {
                 console.log(d)
 
                 var options = {
-                    series: [{
-                        name: 'total',
-                        data: d.entries.map(e => e.total_expense)
-                    }, {
-                        name: 'Food',
-                        data: d.entries.map(e => e.Food)
-                    }, {
-                        name: 'Travel',
-                        data: d.entries.map(e => e.Travel)
-                    }, {
-                        name: 'Shopping',
-                        data: d.entries.map(e => e.Shopping)
-                    }, {
-                        name: 'Medical',
-                        data: d.entries.map(e => e.Medical)
-                    }, {
-                        name: 'Fun',
-                        data: d.entries.map(e => e.Fun)
-                    }, {
-                        name: 'Other',
-                        data: d.entries.map(e => e.Other)
-                    },
-                ],
+                    ...mapReducer(d),
                     chart: {
-                        height: 350,
+                        height: 250,
                         type: 'area'
                     },
                     dataLabels: {
@@ -193,11 +242,6 @@ if (!$islogedin) {
                     stroke: {
                         curve: 'smooth'
                     },
-                    xaxis: {
-                        type: 'datetime',
-                        categories: d.days
-                        // categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                    },
                     tooltip: {
                         x: {
                             format: 'dd/MM/yy'
@@ -205,9 +249,37 @@ if (!$islogedin) {
                     },
                 };
 
-                var bar = new ApexCharts(document.querySelector("#bar"), options);
+                bar = new ApexCharts(document.querySelector("#bar"), options);
                 bar.render();
             });
+
+            function adjust(currentMonth, currentYear) {
+                $.post('./api/chart.php', {
+                    min: 0,
+                    max: Date.now() / 1000,
+                    month: currentMonth,
+                    year: currentYear
+                }, (data) => {
+                    let labels_cate = data.entries.map(e => e.cate);
+                    let series_cate = data.entries.map(e => parseFloat(e.total));
+                    let series_tms = data.entries.map(e => parseFloat(e.tms));
+
+                    total_display.innerText = series_cate.reduce((a, b) => a + b, 0);
+                    let options1 = {series: series_cate,labels: labels_cate};
+                    let options2 = {series: series_tms,labels: labels_cate};
+                    chart1.updateOptions(options1);
+                    chart2.updateOptions(options2);
+                });
+                $.post("./api/bar.php", {
+                    month: currentMonth,
+                    year: currentYear
+                }, (d) => {
+                    let options = mapReducer(d);
+                    bar.updateOptions(options);
+                });
+
+
+            }
             // setInterval(function() {
             //     $.post('./api/chart.php', {
             //     min: 0,

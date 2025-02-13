@@ -1,6 +1,7 @@
 <?php
 
 $conn = mysqli_connect('localhost', 'root', '', 'expense');
+// $conn = mysqli_connect('sql210.infinityfree.com', 'if0_38039536', 'uoOIWLszyw', 'if0_38039536_expense');
 function getrow($id, $conn)
 {
     return mysqli_query($conn, "SELECT * FROM expenses WHERE id = $id AND cid='" . $_COOKIE['useride'] . "'");

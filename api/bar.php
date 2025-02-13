@@ -5,11 +5,23 @@ try {
     include '../server/conn.php';
 
     // List of all possible categories
-    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun", "Other"];
+    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun", "Stationary", "Other","borrow"];
 
-    // Get current month start and end Unix timestamps
-    $currentMonthStart = strtotime(date('Y-m-01 00:00:00'));
-    $currentMonthEnd = strtotime(date('Y-m-t 23:59:59'));
+    // Get current/desired month start and end Unix timestamps
+    if (isset($_POST['month'])) {
+        $selectedMonth = intval($_POST['month']); // Get selected month and ensure it's an integer
+    } else {
+        $selectedMonth = date('n'); // Default to current month
+    }
+    if (isset($_POST['year'])) {
+        $currentYear = intval($_POST['year']); // Get selected month and ensure it's an integer
+    } else {
+        $currentYear = date('Y'); // Default to current month
+    }
+    // $currentYear = 2025;
+    // $selectedMonth = 2;
+    $currentMonthStart = strtotime(date("$currentYear-$selectedMonth-01 00:00:00"));
+    $currentMonthEnd = strtotime(date("$currentYear-$selectedMonth-t 23:59:59"));
 
     // Set up user ID based on cookie or POST data
     $id = isset($_COOKIE['useride']) ? $_COOKIE['useride'] : $_POST['cid'];
@@ -56,7 +68,9 @@ try {
                 "Medical"=>0,
                 "Other"=>0,
                 "Shopping"=> 0,
-                "Travel"=> 0,];
+                "Travel"=> 0,
+                "Stationary"=> 0,
+                "borrow"=> 0];
            
         }
 

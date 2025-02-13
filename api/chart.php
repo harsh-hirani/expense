@@ -10,8 +10,20 @@ try {
     } else {
         $id = $_POST['cid'];
     }
-    $currentMonthStart = strtotime(date('Y-m-01 00:00:00'));
-    $currentMonthEnd = strtotime(date('Y-m-t 23:59:59'));
+    if (isset($_POST['month'])) {
+        $selectedMonth = intval($_POST['month']); // Get selected month and ensure it's an integer
+    } else {
+        $selectedMonth = date('n'); // Default to current month
+    }
+    if (isset($_POST['year'])) {
+        $currentYear = intval($_POST['year']); // Get selected month and ensure it's an integer
+    } else {
+        $currentYear = date('Y'); // Default to current month
+    }
+    // $currentYear = 2025;
+    // $selectedMonth = 2;
+    $currentMonthStart = strtotime(date("$currentYear-$selectedMonth-01 00:00:00"));
+    $currentMonthEnd = strtotime(date("$currentYear-$selectedMonth-t 23:59:59"));
     // $sql = "SELECT sum(amount) as total,cate,count(amount) as tms FROM `expenses` where cid = '" . $id . "' AND tt > " . $min . " and tt < " . $max . " group by cate";
     $sql = "
         SELECT 
@@ -63,7 +75,7 @@ try {
     }
 
     // Output the JSON-encoded data
-    echo json_encode(["status" => 200, "entries" => $expenses]);
+    echo json_encode(["status" => 200,"selectedMonth"=>$selectedMonth, "entries" => $expenses]);
 
     // Close connection
     $stmt->close();

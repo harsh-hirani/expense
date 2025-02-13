@@ -22,7 +22,7 @@ if (!$islogedin) {
         array_push($group_people, $row);
     }
     $stmt->close();
-    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun", "Other"];
+    $cates = ["Food", "Travel", "Shopping", "Medical", "Fun", "Stationary", "Other","borrow"];
 ?>
 
     <!DOCTYPE html>
