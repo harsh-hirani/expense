@@ -3,4 +3,18 @@
 <script>
 <?php
 ?>
+
+function changeLocation() {
+
+    let selectedCategories = [];
+    document.querySelectorAll('input[name="category[]"]:checked').forEach(checkbox => {
+        selectedCategories.push(encodeURIComponent(checkbox.value));
+    });
+
+    if (selectedCategories.length > 0) {
+        window.location.href = "index.php?category=" + selectedCategories.join(",");
+    } else {
+        alert("Please select at least one category.");
+    }
+}
 </script>

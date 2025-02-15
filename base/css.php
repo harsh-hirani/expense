@@ -4,4 +4,19 @@
     include "list.css";
     include "navstyle.css";
     ?>
+    
+    @media (max-width: 992px) { /* mobile */
+        .d-lap{
+            display: none !important;
+        }
+    }
+    @media screen and (min-width: 992px) { /* desktop */
+        .d-mob{
+            display: none !important;
+        }        
+    }
+    .cate{
+        cursor: pointer;
+    }
+    
 </style>

@@ -94,8 +94,9 @@ if (!$islogedin) {
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <select name="year" id="year" disabled>
+                    <select name="year" id="year" >
                         <option value="2025">2025 </option>
+                        <option value="2024">2024 </option>
                     </select>
                 </div>
             </div>
@@ -139,9 +140,9 @@ if (!$islogedin) {
             month.value = currentMonth;
             year.value = currentYear;
             
-            month.addEventListener('input', function() {
+            [month,year].forEach(e=>e.addEventListener('input', function() {
                 adjust(month.value, year.value);
-            });
+            }));
 
             const mapReducer = (d) => {
                 return {
